@@ -1,0 +1,746 @@
+#Ejercicio 21
+fig=(input("Ingresa la figura en minusculas: "))
+fig.lower
+
+if fig=="cubo":
+    lado=float(input("Ingrese el lado del cubo: "))
+    v=lado**3
+    print(v)
+elif fig=="esfera":
+    radio=float(input("ingrese el radio de la esfera: "))
+    v=(4/3)*(3.1416)*(radio**3)
+    print(v)
+elif fig=="cilindro":
+    altura=float(input("ingrese la altura del cilindro: "))
+    radio=float(input("Ingrese el radio del cilindro: "))
+    v=(3.1416)*(radio**2)*(altura)
+    print(v)
+elif fig=="prisma rectamgular":
+    largo=float(input("Ingrese el largo de la base: "))
+    ancho=float(input("Ingrese el ancho de la base: "))
+    altura=float(input("Ingrese la altura del prisma: "))
+    v=(largo*ancho)*altura
+    print(v)
+elif fig=="prisma triangular":
+    base=float(input("Ingresa la base del triangulo: "))
+    altura=float(input("aiangresa la altura del triangulo: "))
+    alturadelprisma=float(input("Ingresa la altura del prisma: "))
+    v=((base*altura)/2)*alturadelprisma
+    print(v)
+else:
+    print("figura no valida")
+
+import random
+
+def lanzar_moneda():
+    """Simula el lanzamiento de una moneda (cara o cruz)."""
+    resultado = random.choice(['Cara', 'Cruz'])
+    return resultado
+
+def lanzar_dado():
+    """Simula el lanzamiento de un dado (número entre 1 y 6)."""
+    resultado = random.randint(1, 6)
+    return resultado
+
+def main():
+    """Función principal que permite al usuario realizar lanzamientos."""
+    while True:
+        print("\n--- Simulación de Lanzamiento ---")
+        print("1. Lanzar la moneda")
+        print("2. Lanzar el dado")
+        print("3. Salir")
+        
+        opcion = input("Seleccione una opción (1-3): ")
+        
+        if opcion == '1':
+            # Lanzar la moneda
+            resultado_moneda = lanzar_moneda()
+            print(f"Resultado del lanzamiento de la moneda: {resultado_moneda}")
+        
+        elif opcion == '2':
+            # Lanzar el dado
+            resultado_dado = lanzar_dado()
+            print(f"Resultado del lanzamiento del dado: {resultado_dado}")
+        
+        elif opcion == '3':
+            print("¡Hasta luego!")
+            break
+        
+        else:
+            print("Opción no válida. Intente nuevamente.")
+
+# Ejecutar el programa
+main()
+
+
+#Ejercicio 23
+
+class Matriz:
+    def __init__(self, filas, columnas):
+        """Inicializa una matriz con dimensiones dadas (filas, columnas)."""
+        self.matriz = [[0 for _ in range(columnas)] for _ in range(filas)]
+    
+    def ingresar_elementos(self):
+        """Permite al usuario ingresar los elementos de la matriz."""
+        for i in range(len(self.matriz)):
+            for j in range(len(self.matriz[i])):
+                self.matriz[i][j] = float(input(f"Ingrese el elemento en la posición ({i+1}, {j+1}): "))
+    
+    def mostrar_matriz(self):
+        """Muestra la matriz."""
+        for fila in self.matriz:
+            print(fila)
+    
+    def sumar(self, otra_matriz):
+        """Suma la matriz actual con otra matriz."""
+        if len(self.matriz) == len(otra_matriz.matriz) and len(self.matriz[0]) == len(otra_matriz.matriz[0]):
+            resultado = Matriz(len(self.matriz), len(self.matriz[0]))
+            for i in range(len(self.matriz)):
+                for j in range(len(self.matriz[i])):
+                    resultado.matriz[i][j] = self.matriz[i][j] + otra_matriz.matriz[i][j]
+            return resultado
+        else:
+            raise ValueError("Las matrices deben tener las mismas dimensiones para ser sumadas.")
+    
+    def multiplicar(self, otra_matriz):
+        """Multiplica la matriz actual con otra matriz."""
+        if len(self.matriz[0]) == len(otra_matriz.matriz):
+            resultado = Matriz(len(self.matriz), len(otra_matriz.matriz[0]))
+            for i in range(len(self.matriz)):
+                for j in range(len(otra_matriz.matriz[0])):
+                    resultado.matriz[i][j] = sum(self.matriz[i][k] * otra_matriz.matriz[k][j] for k in range(len(self.matriz[0])))
+            return resultado
+        else:
+            raise ValueError("El número de columnas de la primera matriz debe ser igual al número de filas de la segunda matriz.")
+    
+    def transponer(self):
+        """Devuelve la transpuesta de la matriz."""
+        resultado = Matriz(len(self.matriz[0]), len(self.matriz))
+        for i in range(len(self.matriz)):
+            for j in range(len(self.matriz[i])):
+                resultado.matriz[j][i] = self.matriz[i][j]
+        return resultado
+    
+    def determinante(self):
+        """Devuelve el determinante de la matriz si es cuadrada."""
+        if len(self.matriz) != len(self.matriz[0]):
+            raise ValueError("La matriz debe ser cuadrada para calcular el determinante.")
+        
+        # Implementación del determinante para matrices 2x2 y 3x3
+        if len(self.matriz) == 2:
+            return self.matriz[0][0] * self.matriz[1][1] - self.matriz[0][1] * self.matriz[1][0]
+        elif len(self.matriz) == 3:
+            return (
+                self.matriz[0][0] * (self.matriz[1][1] * self.matriz[2][2] - self.matriz[1][2] * self.matriz[2][1]) -
+                self.matriz[0][1] * (self.matriz[1][0] * self.matriz[2][2] - self.matriz[1][2] * self.matriz[2][0]) +
+                self.matriz[0][2] * (self.matriz[1][0] * self.matriz[2][1] - self.matriz[1][1] * self.matriz[2][0])
+            )
+        else:
+            raise ValueError("El cálculo del determinante está implementado solo para matrices 2x2 y 3x3.")
+
+# Ejemplo de uso:
+if __name__ == "__main__":
+    # Crear una matriz 2x2
+    matriz1 = Matriz(2, 2)
+    matriz1.ingresar_elementos()
+    
+    # Crear otra matriz 2x2
+    matriz2 = Matriz(2, 2)
+    matriz2.ingresar_elementos()
+    
+    # Mostrar matrices
+    print("Matriz 1:")
+    matriz1.mostrar_matriz()
+    print("Matriz 2:")
+    matriz2.mostrar_matriz()
+    
+    # Sumar matrices
+    try:
+        suma = matriz1.sumar(matriz2)
+        print("Suma de matrices:")
+        suma.mostrar_matriz()
+    except ValueError as e:
+        print(e)
+    
+    # Multiplicar matrices
+    try:
+        producto = matriz1.multiplicar(matriz2)
+        print("Producto de matrices:")
+        producto.mostrar_matriz()
+    except ValueError as e:
+        print(e)
+    
+    # Transponer una matriz
+    transpuesta = matriz1.transponer()
+    print("Transpuesta de la matriz 1:")
+    transpuesta.mostrar_matriz()
+    
+    # Calcular el determinante
+    try:
+        det = matriz1.determinante()
+        print(f"Determinante de la matriz 1: {det}")
+    except ValueError as e:
+        print(e)
+
+
+#Ejercicio 24
+sum=0
+n=int(input("Ingrese el numero de numeros que quieres sumar: "))
+for i in range(0,n):
+    num=int(input(f"ingrese el numero {i+1}: "))
+    sum+=num
+print(sum)
+
+#Ejercicio 25
+def generar_histograma(datos, num_bins=10):
+    """Genera un histograma a partir de los datos proporcionados."""
+    # Calcular el rango de los datos
+    min_val = min(datos)
+    max_val = max(datos)
+    
+    # Calcular el ancho de cada bin
+    rango = max_val - min_val
+    ancho_bin = rango / num_bins
+
+    # Inicializar los bins
+    bins = [0] * num_bins
+    
+    # Contar las ocurrencias de los datos en cada bin
+    for dato in datos:
+        index = int((dato - min_val) / ancho_bin)
+        if index == num_bins:  # Asegurarse de que el máximo dato no se quede fuera del rango
+            index -= 1
+        bins[index] += 1
+    
+    # Mostrar el histograma
+    print(f"Histograma (con {num_bins} bins):")
+    for i in range(num_bins):
+        bin_range_start = min_val + i * ancho_bin
+        bin_range_end = bin_range_start + ancho_bin
+        print(f"({bin_range_start:.2f} - {bin_range_end:.2f}): {'*' * bins[i]}")
+    
+def analizar_datos(datos):
+    """Realiza un análisis básico de los datos."""
+    n = len(datos)
+    
+    # Calcular la media
+    media = sum(datos) / n
+    
+    # Calcular la mediana
+    datos_ordenados = sorted(datos)
+    if n % 2 == 0:
+        mediana = (datos_ordenados[n//2 - 1] + datos_ordenados[n//2]) / 2
+    else:
+        mediana = datos_ordenados[n//2]
+    
+    # Calcular la desviación estándar
+    varianza = sum((x - media) ** 2 for x in datos) / n
+    desviacion = varianza ** 0.5
+    
+    # Calcular el valor mínimo y máximo
+    min_val = min(datos)
+    max_val = max(datos)
+    
+    print(f"\nAnálisis de Datos:")
+    print(f"Media: {media:.2f}")
+    print(f"Mediana: {mediana:.2f}")
+    print(f"Desviación Estándar: {desviacion:.2f}")
+    print(f"Varianza: {varianza:.2f}")
+    print(f"Valor Mínimo: {min_val}")
+    print(f"Valor Máximo: {max_val}")
+    
+def generar_datos_aleatorios(num_datos=1000, media=0, desviacion=1):
+    """Genera un conjunto de datos aleatorios con distribución normal aproximada (usando método Box-Muller)."""
+    import random
+    datos = []
+    for _ in range(num_datos // 2):
+        u1 = random.random()
+        u2 = random.random()
+        z0 = (-(2 * (u1**0.5)) * 3.14159) * u2
+        z1 = (-(2 * (u1**0.5)) * 3.14159) * u2
+        datos.append(z0 * desviacion + media)
+        datos.append(z1 * desviacion + media)
+    return datos
+
+# Ejemplo de uso:
+if __name__ == "__main__":
+    # Generar datos aleatorios con distribución normal aproximada
+    datos = generar_datos_aleatorios(num_datos=1000, media=0, desviacion=1)
+
+    # Generar y mostrar el histograma
+    generar_histograma(datos, num_bins=20)
+    
+    # Realizar análisis de los datos
+    analizar_datos(datos)
+
+#Ejercicio 26
+class Agenda:
+    def __init__(self):
+        # Inicializa la agenda como un diccionario vacío
+        self.contactos = {}
+
+    def agregar_contacto(self, nombre, telefono, email):
+        """Agrega un nuevo contacto a la agenda."""
+        self.contactos[nombre] = {'telefono': telefono, 'email': email}
+        print(f"Contacto de {nombre} agregado exitosamente.")
+
+    def mostrar_contactos(self):
+        """Muestra todos los contactos en la agenda."""
+        if not self.contactos:
+            print("No hay contactos en la agenda.")
+        else:
+            for nombre, info in self.contactos.items():
+                print(f"Nombre: {nombre}")
+                print(f"  Teléfono: {info['telefono']}")
+                print(f"  Email: {info['email']}")
+                print("-" * 30)
+
+    def buscar_contacto(self, nombre):
+        """Busca un contacto por nombre."""
+        if nombre in self.contactos:
+            info = self.contactos[nombre]
+            print(f"Contacto encontrado: {nombre}")
+            print(f"  Teléfono: {info['telefono']}")
+            print(f"  Email: {info['email']}")
+        else:
+            print(f"No se encontró el contacto con el nombre {nombre}.")
+
+    def actualizar_contacto(self, nombre, telefono=None, email=None):
+        """Actualiza la información de un contacto."""
+        if nombre in self.contactos:
+            if telefono:
+                self.contactos[nombre]['telefono'] = telefono
+            if email:
+                self.contactos[nombre]['email'] = email
+            print(f"Contacto de {nombre} actualizado exitosamente.")
+        else:
+            print(f"No se encontró el contacto con el nombre {nombre}.")
+
+    def eliminar_contacto(self, nombre):
+        """Elimina un contacto de la agenda."""
+        if nombre in self.contactos:
+            del self.contactos[nombre]
+            print(f"Contacto de {nombre} eliminado exitosamente.")
+        else:
+            print(f"No se encontró el contacto con el nombre {nombre}.")
+
+
+def mostrar_menu():
+    """Muestra el menú de opciones."""
+    print("\nAgenda de Contactos:")
+    print("1. Agregar contacto")
+    print("2. Mostrar todos los contactos")
+    print("3. Buscar contacto")
+    print("4. Actualizar contacto")
+    print("5. Eliminar contacto")
+    print("6. Salir")
+
+def main():
+    agenda = Agenda()
+    
+    while True:
+        mostrar_menu()
+        opcion = input("Elige una opción (1-6): ")
+
+        if opcion == "1":
+            nombre = input("Ingresa el nombre del contacto: ")
+            telefono = input("Ingresa el teléfono del contacto: ")
+            email = input("Ingresa el email del contacto: ")
+            agenda.agregar_contacto(nombre, telefono, email)
+
+        elif opcion == "2":
+            agenda.mostrar_contactos()
+
+        elif opcion == "3":
+            nombre = input("Ingresa el nombre del contacto a buscar: ")
+            agenda.buscar_contacto(nombre)
+
+        elif opcion == "4":
+            nombre = input("Ingresa el nombre del contacto a actualizar: ")
+            telefono = input("Ingresa el nuevo teléfono (deja en blanco si no deseas actualizar): ")
+            email = input("Ingresa el nuevo email (deja en blanco si no deseas actualizar): ")
+            agenda.actualizar_contacto(nombre, telefono, email)
+
+        elif opcion == "5":
+            nombre = input("Ingresa el nombre del contacto a eliminar: ")
+            agenda.eliminar_contacto(nombre)
+
+        elif opcion == "6":
+            print("¡Hasta luego!")
+            break
+
+        else:
+            print("Opción no válida, por favor ingresa un número entre 1 y 6.")
+
+#Ejercicio 27
+def convertir_longitud(valor, unidad_origen, unidad_destino):
+    """Convierte entre diferentes unidades de longitud."""
+    unidades_longitud = {
+        "mm": 1,
+        "cm": 10,
+        "m": 1000,
+        "km": 1000000
+    }
+    
+    # Convertir el valor de la unidad de origen a milímetros
+    valor_en_mm = valor * unidades_longitud[unidad_origen]
+    
+    # Convertir el valor en milímetros a la unidad de destino
+    valor_convertido = valor_en_mm / unidades_longitud[unidad_destino]
+    
+    return valor_convertido
+
+def convertir_peso(valor, unidad_origen, unidad_destino):
+    """Convierte entre diferentes unidades de peso."""
+    unidades_peso = {
+        "mg": 1,
+        "g": 1000,
+        "kg": 1000000,
+        "tonelada": 1000000000
+    }
+    
+    # Convertir el valor de la unidad de origen a miligramos
+    valor_en_mg = valor * unidades_peso[unidad_origen]
+    
+    # Convertir el valor en miligramos a la unidad de destino
+    valor_convertido = valor_en_mg / unidades_peso[unidad_destino]
+    
+    return valor_convertido
+
+def convertir_temperatura(valor, unidad_origen, unidad_destino):
+    """Convierte entre diferentes unidades de temperatura."""
+    if unidad_origen == "Celsius":
+        if unidad_destino == "Fahrenheit":
+            return (valor * 9/5) + 32
+        elif unidad_destino == "Kelvin":
+            return valor + 273.15
+    elif unidad_origen == "Fahrenheit":
+        if unidad_destino == "Celsius":
+            return (valor - 32) * 5/9
+        elif unidad_destino == "Kelvin":
+            return (valor - 32) * 5/9 + 273.15
+    elif unidad_origen == "Kelvin":
+        if unidad_destino == "Celsius":
+            return valor - 273.15
+        elif unidad_destino == "Fahrenheit":
+            return (valor - 273.15) * 9/5 + 32
+    
+    return valor  # Si las unidades son iguales, no se realiza la conversión.
+
+def convertir_volumen(valor, unidad_origen, unidad_destino):
+    """Convierte entre diferentes unidades de volumen."""
+    unidades_volumen = {
+        "ml": 1,
+        "cl": 10,
+        "l": 1000,
+        "m3": 1000000
+    }
+    
+    # Convertir el valor de la unidad de origen a mililitros
+    valor_en_ml = valor * unidades_volumen[unidad_origen]
+    
+    # Convertir el valor en mililitros a la unidad de destino
+    valor_convertido = valor_en_ml / unidades_volumen[unidad_destino]
+    
+    return valor_convertido
+
+def mostrar_menu():
+    """Muestra el menú de opciones de conversión."""
+    print("Conversor de Unidades")
+    print("Seleccione el tipo de conversión:")
+    print("1. Longitud")
+    print("2. Peso")
+    print("3. Temperatura")
+    print("4. Volumen")
+    print("5. Salir")
+
+def menu_conversor():
+    """Maneja la lógica del conversor de unidades."""
+    while True:
+        mostrar_menu()
+        opcion = input("Ingrese una opción (1-5): ")
+        
+        if opcion == "1":
+            # Conversión de Longitud
+            valor = float(input("Ingrese el valor a convertir: "))
+            unidad_origen = input("Ingrese la unidad de origen (mm, cm, m, km): ")
+            unidad_destino = input("Ingrese la unidad de destino (mm, cm, m, km): ")
+            resultado = convertir_longitud(valor, unidad_origen, unidad_destino)
+            print(f"{valor} {unidad_origen} son {resultado} {unidad_destino}.")
+        
+        elif opcion == "2":
+            # Conversión de Peso
+            valor = float(input("Ingrese el valor a convertir: "))
+            unidad_origen = input("Ingrese la unidad de origen (mg, g, kg, tonelada): ")
+            unidad_destino = input("Ingrese la unidad de destino (mg, g, kg, tonelada): ")
+            resultado = convertir_peso(valor, unidad_origen, unidad_destino)
+            print(f"{valor} {unidad_origen} son {resultado} {unidad_destino}.")
+        
+        elif opcion == "3":
+            # Conversión de Temperatura
+            valor = float(input("Ingrese el valor a convertir: "))
+            unidad_origen = input("Ingrese la unidad de origen (Celsius, Fahrenheit, Kelvin): ")
+            unidad_destino = input("Ingrese la unidad de destino (Celsius, Fahrenheit, Kelvin): ")
+            resultado = convertir_temperatura(valor, unidad_origen, unidad_destino)
+            print(f"{valor} {unidad_origen} son {resultado} {unidad_destino}.")
+        
+        elif opcion == "4":
+            # Conversión de Volumen
+            valor = float(input("Ingrese el valor a convertir: "))
+            unidad_origen = input("Ingrese la unidad de origen (ml, cl, l, m3): ")
+            unidad_destino = input("Ingrese la unidad de destino (ml, cl, l, m3): ")
+            resultado = convertir_volumen(valor, unidad_origen, unidad_destino)
+            print(f"{valor} {unidad_origen} son {resultado} {unidad_destino}.")
+        
+        elif opcion == "5":
+            print("¡Hasta luego!")
+            break
+        
+        else:
+            print("Opción inválida, intente de nuevo.")
+
+# Ejecutar el conversor
+menu_conversor()
+
+if __name__ == "__main__":
+    main()
+
+#Ejercicio 28
+class CuentaBancaria:
+    def __init__(self, titular, saldo_inicial=0):
+        """Inicializa la cuenta con el titular y un saldo inicial."""
+        self.titular = titular
+        self.saldo = saldo_inicial
+    
+    def depositar(self, cantidad):
+        """Deposita una cantidad a la cuenta."""
+        if cantidad > 0:
+            self.saldo += cantidad
+            print(f"Has depositado {cantidad}. Nuevo saldo: {self.saldo}.")
+        else:
+            print("La cantidad a depositar debe ser mayor que cero.")
+    
+    def retirar(self, cantidad):
+        """Realiza un retiro de la cuenta si el saldo es suficiente."""
+        if cantidad > 0:
+            if cantidad <= self.saldo:
+                self.saldo -= cantidad
+                print(f"Has retirado {cantidad}. Nuevo saldo: {self.saldo}.")
+            else:
+                print("Fondos insuficientes para realizar el retiro.")
+        else:
+            print("La cantidad a retirar debe ser mayor que cero.")
+    
+    def consultar_saldo(self):
+        """Consulta el saldo de la cuenta."""
+        print(f"El saldo actual de la cuenta de {self.titular} es: {self.saldo}.")
+
+def mostrar_menu():
+    """Muestra las opciones disponibles para el usuario."""
+    print("\n--- Menú de Cuenta Bancaria ---")
+    print("1. Depositar dinero")
+    print("2. Retirar dinero")
+    print("3. Consultar saldo")
+    print("4. Salir")
+
+def ejecutar_operaciones():
+    """Gestiona las operaciones de la cuenta bancaria."""
+    # Solicitar el nombre del titular de la cuenta
+    titular = input("Ingrese el nombre del titular de la cuenta: ")
+    cuenta = CuentaBancaria(titular)
+    
+    while True:
+        mostrar_menu()
+        opcion = input("Seleccione una opción (1-4): ")
+
+        if opcion == "1":
+            # Realizar un depósito
+            cantidad = float(input("Ingrese la cantidad a depositar: "))
+            cuenta.depositar(cantidad)
+        
+        elif opcion == "2":
+            # Realizar un retiro
+            cantidad = float(input("Ingrese la cantidad a retirar: "))
+            cuenta.retirar(cantidad)
+        
+        elif opcion == "3":
+            # Consultar el saldo
+            cuenta.consultar_saldo()
+        
+        elif opcion == "4":
+            print("Gracias por utilizar el sistema bancario. ¡Hasta luego!")
+            break
+        
+        else:
+            print("Opción no válida. Intente nuevamente.")
+
+# Ejecutar el programa
+ejecutar_operaciones()
+
+
+#Ejercicio 29
+import random
+from collections import Counter
+import math
+
+def generar_datos(n, rango_min, rango_max):
+    """Genera una lista de n datos aleatorios en el rango [rango_min, rango_max]."""
+    datos = [random.randint(rango_min, rango_max) for _ in range(n)]
+    return datos
+
+def calcular_media(datos):
+    """Calcula la media de un conjunto de datos."""
+    return sum(datos) / len(datos)
+
+def calcular_mediana(datos):
+    """Calcula la mediana de un conjunto de datos."""
+    datos_ordenados = sorted(datos)
+    n = len(datos_ordenados)
+    if n % 2 == 0:
+        # Si hay un número par de elementos, la mediana es el promedio de los dos del medio
+        return (datos_ordenados[n // 2 - 1] + datos_ordenados[n // 2]) / 2
+    else:
+        # Si hay un número impar de elementos, la mediana es el valor del medio
+        return datos_ordenados[n // 2]
+
+def calcular_moda(datos):
+    """Calcula la moda de un conjunto de datos."""
+    contador = Counter(datos)
+    max_count = max(contador.values())
+    modas = [k for k, v in contador.items() if v == max_count]
+    return modas
+
+def calcular_desviacion_estandar(datos):
+    """Calcula la desviación estándar de un conjunto de datos."""
+    media = calcular_media(datos)
+    varianza = sum((x - media) ** 2 for x in datos) / len(datos)
+    return math.sqrt(varianza)
+
+def calcular_varianza(datos):
+    """Calcula la varianza de un conjunto de datos."""
+    desviacion_estandar = calcular_desviacion_estandar(datos)
+    return desviacion_estandar ** 2
+
+def mostrar_estadisticas(datos):
+    """Muestra las estadísticas básicas de los datos."""
+    media = calcular_media(datos)
+    mediana = calcular_mediana(datos)
+    moda = calcular_moda(datos)
+    desviacion_estandar = calcular_desviacion_estandar(datos)
+    varianza = calcular_varianza(datos)
+    
+    print(f"Estadísticas de los datos:")
+    print(f"Media: {media:.2f}")
+    print(f"Mediana: {mediana:.2f}")
+    print(f"Moda: {moda}")
+    print(f"Desviación Estándar: {desviacion_estandar:.2f}")
+    print(f"Varianza: {varianza:.2f}")
+
+def generar_histograma(datos, num_bins=10):
+    """Genera un histograma simple de los datos."""
+    min_val = min(datos)
+    max_val = max(datos)
+    rango = max_val - min_val
+    ancho_bin = rango / num_bins
+
+    bins = [0] * num_bins
+    for dato in datos:
+        index = int((dato - min_val) / ancho_bin)
+        if index == num_bins:  # Para manejar el caso en que el valor máximo caiga justo en el límite
+            index -= 1
+        bins[index] += 1
+
+    print("\nHistograma:")
+    for i in range(num_bins):
+        bin_range_start = min_val + i * ancho_bin
+        bin_range_end = bin_range_start + ancho_bin
+        print(f"({bin_range_start:.2f} - {bin_range_end:.2f}): {'*' * bins[i]}")
+
+def main():
+    """Función principal para generar y analizar datos estadísticos."""
+    # Generar un conjunto de datos aleatorios
+    n = int(input("Ingrese el número de datos: "))
+    rango_min = int(input("Ingrese el valor mínimo del rango: "))
+    rango_max = int(input("Ingrese el valor máximo del rango: "))
+    
+    datos = generar_datos(n, rango_min, rango_max)
+    
+    # Mostrar estadísticas
+    mostrar_estadisticas(datos)
+    
+    # Mostrar histograma
+    generar_histograma(datos, num_bins=10)
+
+# Ejecutar el programa
+main()
+
+#Ejercicio 30
+# Función recursiva para calcular el factorial de un número
+def factorial(n):
+    """Calcula el factorial de un número n usando recursión."""
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+# Función recursiva para calcular la suma de los primeros n números
+def suma_numeros(n):
+    """Calcula la suma de los primeros n números naturales usando recursión."""
+    if n == 0:
+        return 0
+    else:
+        return n + suma_numeros(n - 1)
+
+# Función recursiva para calcular el enésimo número de la secuencia de Fibonacci
+def fibonacci(n):
+    """Calcula el enésimo número de Fibonacci usando recursión."""
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Función recursiva para calcular la potencia de un número (base^exponente)
+def potencia(base, exponente):
+    """Calcula base^exponente usando recursión."""
+    if exponente == 0:
+        return 1
+    else:
+        return base * potencia(base, exponente - 1)
+
+# Función recursiva para invertir una cadena
+def invertir_cadena(cadena):
+    """Invierte una cadena de texto usando recursión."""
+    if len(cadena) == 0:
+        return cadena
+    else:
+        return cadena[-1] + invertir_cadena(cadena[:-1])
+
+# Función principal para probar las funciones recursivas
+def main():
+    print("Funciones Recursivas")
+
+    # Calcular factorial
+    n = int(input("Ingrese un número para calcular su factorial: "))
+    print(f"El factorial de {n} es: {factorial(n)}")
+
+    # Calcular suma de números
+    n = int(input("Ingrese un número para calcular la suma de los primeros n números: "))
+    print(f"La suma de los primeros {n} números es: {suma_numeros(n)}")
+
+    # Calcular Fibonacci
+    n = int(input("Ingrese un número para calcular el enésimo número de Fibonacci: "))
+    print(f"El número de Fibonacci en la posición {n} es: {fibonacci(n)}")
+
+    # Calcular potencia
+    base = float(input("Ingrese la base para calcular la potencia: "))
+    exponente = int(input("Ingrese el exponente para calcular la potencia: "))
+    print(f"{base} elevado a {exponente} es: {potencia(base, exponente)}")
+
+    # Invertir cadena
+    cadena = input("Ingrese una cadena para invertirla: ")
+    print(f"La cadena invertida es: {invertir_cadena(cadena)}")
+
+
+main()
+
+
