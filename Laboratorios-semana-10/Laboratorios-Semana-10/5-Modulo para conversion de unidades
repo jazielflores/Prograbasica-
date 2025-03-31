@@ -1,0 +1,43 @@
+# programa_principal.py - Programa que usa el módulo conversor
+import conversor
+
+def mostrar_menu():
+    """Muestra las opciones del menú."""
+    print("\nSeleccione una conversión:")
+    print("1. Kilómetros a Millas")
+    print("2. Celsius a Fahrenheit")
+    print("3. Litros a Galones")
+    print("4. Salir")
+
+def obtener_numero(mensaje):
+    """Solicita al usuario un número y maneja errores de entrada."""
+    while True:
+        try:
+            return float(input(mensaje))
+        except ValueError:
+            print("Error: Ingrese un número válido.")
+
+def main():
+    opciones = {
+        "1": ("Kilómetros", "Millas", conversor.km_a_millas),
+        "2": ("Celsius", "Fahrenheit", conversor.celsius_a_fahrenheit),
+        "3": ("Litros", "Galones", conversor.litros_a_galones)
+    }
+    
+    while True:
+        mostrar_menu()
+        opcion = input("Ingrese el número de la opción deseada: ")
+        
+        if opcion == "4":
+            print("Saliendo del programa...")
+            break
+        elif opcion in opciones:
+            unidad_origen, unidad_destino, funcion_conversion = opciones[opcion]
+            cantidad = obtener_numero(f"Ingrese la cantidad de {unidad_origen}: ")
+            resultado = funcion_conversion(cantidad)
+            print(f"{cantidad} {unidad_origen} equivalen a {resultado:.2f} {unidad_destino}.")
+        else:
+            print("Opción no válida. Intente nuevamente.")
+
+if __name__ == "__main__":
+    main()

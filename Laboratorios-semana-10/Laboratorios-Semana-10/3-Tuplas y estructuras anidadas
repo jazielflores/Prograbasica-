@@ -1,0 +1,39 @@
+class AgendaContactos:
+    def __init__(self):
+        # Inicializa una lista vacía para almacenar los contactos
+        self.contactos = []
+    
+    def agregar_contacto(self, nombre, numero, correo):
+        # Agrega un nuevo contacto como una tupla a la lista de contactos
+        self.contactos.append((nombre, numero, correo))
+        print(f"Contacto '{nombre}' agregado exitosamente.")
+    
+    def buscar_contacto(self, nombre):
+        # Busca un contacto por nombre e imprime su información
+        for contacto in self.contactos:
+            if contacto[0] == nombre:
+                print(f"Contacto encontrado: Nombre: {contacto[0]}, Número: {contacto[1]}, Correo: {contacto[2]}")
+                return contacto
+        print("Contacto no encontrado.")
+        return None
+    
+    def listar_contactos(self):
+        # Lista todos los contactos ordenados alfabéticamente por nombre
+        contactos_ordenados = sorted(self.contactos, key=lambda x: x[0])
+        print("Lista de contactos ordenados:")
+        for contacto in contactos_ordenados:
+            print(f"Nombre: {contacto[0]}, Número: {contacto[1]}, Correo: {contacto[2]}")
+
+# Ejemplo de uso
+agenda = AgendaContactos()
+
+# Agregar contactos a la agenda
+agenda.agregar_contacto("Carlos Pérez", "123456789", "carlos@example.com")
+agenda.agregar_contacto("Ana Gómez", "987654321", "ana@example.com")
+agenda.agregar_contacto("Beatriz López", "555666777", "beatriz@example.com")
+
+# Listar contactos ordenados
+agenda.listar_contactos()
+
+# Buscar un contacto específico
+agenda.buscar_contacto("Ana Gómez")

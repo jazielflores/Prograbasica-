@@ -1,0 +1,41 @@
+class Vehiculo:
+    def __init__(self, marca, modelo, ano, precio):
+        self.marca = marca
+        self.modelo = modelo
+        self.ano = ano
+        self.precio = precio
+
+    def mostrar_informacion(self):
+        print(f"Marca: {self.marca}")
+        print(f"Modelo: {self.modelo}")
+        print(f"Año: {self.ano}")
+        print(f"Precio: ${self.precio:.2f}")
+
+# Subclase Automovil
+class Automovil(Vehiculo):
+    def __init__(self, marca, modelo, ano, precio, num_puertas):
+        super().__init__(marca, modelo, ano, precio)
+        self.num_puertas = num_puertas
+
+    def mostrar_informacion(self):
+        super().mostrar_informacion()
+        print(f"Número de puertas: {self.num_puertas}")
+
+# Subclase Motocicleta
+class Motocicleta(Vehiculo):
+    def __init__(self, marca, modelo, ano, precio, cilindrada):
+        super().__init__(marca, modelo, ano, precio)
+        self.cilindrada = cilindrada
+
+    def mostrar_informacion(self):
+        super().mostrar_informacion()
+        print(f"Cilindrada: {self.cilindrada} cc")
+
+# Ejemplo de uso
+auto = Automovil("Toyota", "Corolla", 2020, 20000, 4)
+moto = Motocicleta("Harley-Davidson", "Iron 883", 2021, 9500, 883)
+
+print("Información del automóvil:")
+auto.mostrar_informacion()
+print("\nInformación de la motocicleta:")
+moto.mostrar_informacion()

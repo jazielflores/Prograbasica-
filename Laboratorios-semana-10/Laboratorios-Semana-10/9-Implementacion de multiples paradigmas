@@ -1,0 +1,50 @@
+# operaciones.py
+
+# Paradigma Imperativo y Estructurado
+def calcular_factorial(n):
+    """Calcula el factorial de un número de forma imperativa"""
+    if n < 0:
+        return "El número debe ser positivo."
+    factorial = 1
+    for i in range(1, n + 1):
+        factorial *= i
+    return factorial
+
+# mostrar.py
+
+# Paradigma Modular: Función para mostrar los resultados
+def mostrar_resultado(n, resultado):
+    """Muestra el resultado del cálculo"""
+    print(f"El factorial de {n} es: {resultado}")
+
+# operaciones.py
+
+# Paradigma Imperativo y Estructurado
+def calcular_factorial(n):
+    """Calcula el factorial de un número de forma imperativa"""
+    if n < 0:
+        return "El número debe ser positivo."
+    factorial = 1
+    for i in range(1, n + 1):
+        factorial *= i
+    return factorial
+# mostrar.py
+
+# Paradigma Modular: Función para mostrar los resultados
+def mostrar_resultado(n, resultado):
+    """Muestra el resultado del cálculo"""
+    print(f"El factorial de {n} es: {resultado}")
+
+
+
+def main():
+    # Entrada de usuario
+    numero = int(input("Ingrese un número para calcular su factorial: "))
+
+    # Usamos el paradigma orientado a objetos
+    calculadora = CalculadoraFactorial(numero)
+    calculadora.mostrar()
+
+if __name__ == "__main__":
+    main()
+

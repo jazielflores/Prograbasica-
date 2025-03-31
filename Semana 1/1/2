@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generar valores para x y calcular los correspondientes valores de y para ambas ecuaciones
+x_values = np.linspace(-3, 3, 400)
+y_values_1 = 1 - x_values  # y = 1 - x
+y_values_2 = -1 - x_values  # y = -1 - x
+
+# Crear la gráfica
+plt.figure(figsize=(6, 6))
+plt.plot(x_values, y_values_1, label=r'$x + y = 1$', color='blue', linestyle='--')
+plt.plot(x_values, y_values_2, label=r'$x + y = -1$', color='red', linestyle='--')
+
+# Añadir detalles
+plt.axhline(0, color='black',linewidth=1)
+plt.axvline(0, color='black',linewidth=1)
+plt.xlim(-3, 3)
+plt.ylim(-3, 3)
+plt.gca().set_aspect('equal', adjustable='box')  # Para mantener la proporción
+plt.grid(True)
+
+# Etiquetas y leyenda
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Gráfica de las rectas: $x + y = 1$ y $x + y = -1$')
+plt.legend()
+
+# Mostrar la gráfica
+plt.show()
